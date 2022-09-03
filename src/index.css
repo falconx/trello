@@ -6,12 +6,13 @@
 
 *:focus {
   outline: 1px dotted currentColor;
-  outline-offset: 0.5rem;
+  outline-offset: 0.1rem;
 }
 
 /* Remove default padding */
 ul,
-ol {
+ol,
+button {
   padding: 0;
 }
 
@@ -55,6 +56,10 @@ ol {
 a,
 button {
   cursor: pointer;
+}
+
+label {
+  display: block;
 }
 
 a {

@@ -2,12 +2,14 @@ import React, { createContext } from 'react';
 
 import { GlobalState } from './types/GlobalState';
 import { Column } from './types/Column';
+import { Card } from './types/Card';
 
 import useLocalStorage from './hooks/useLocalStorage';
 
 interface GlobalAppContext {
   state: GlobalState;
   updateColumn: (columnId: string, value: Partial<Column>) => void;
+  addCard: (columnId: string, value: Card) => void;
 }
 
 const defaultState = {
@@ -64,11 +66,28 @@ const AppProvider: React.FunctionComponent<Props> = props => {
     });
   };
 
+  const addCard = (columnId: string, value: Card): void => {
+    setState({
+      ...state,
+      columnsById: {
+        ...state.columnsById,
+        [columnId]: {
+          ...state.columnsById[columnId],
+          cardsById: {
+            ...state.columnsById[columnId].cardsById,
+            [value.id]: value,
+          },
+        },
+      },
+    });
+  };
+
   return (
     <AppContext.Provider
       value={{
         state,
         updateColumn,
+        addCard,
       }}
       {...props}
     />

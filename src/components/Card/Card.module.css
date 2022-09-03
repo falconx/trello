@@ -1,5 +1,5 @@
 .root {
-  padding: var(--space-1);
+  padding: var(--space-3);
   border-radius: 3px;
   background-color: var(--c-card);
 }

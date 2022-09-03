@@ -8,6 +8,8 @@ import './App.module.css';
 const App: React.FunctionComponent = () => (
   <AppProvider>
     <Board />
+
+    <div id="modal-root" />
   </AppProvider>
 );
 
