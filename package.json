@@ -42,6 +42,8 @@
     ]
   },
   "devDependencies": {
-    "@types/uuid": "8.3.4"
+    "@types/lodash": "4.14.184",
+    "@types/uuid": "8.3.4",
+    "lodash": "4.17.21"
   }
 }

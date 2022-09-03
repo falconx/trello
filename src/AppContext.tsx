@@ -4,12 +4,15 @@ import { GlobalState } from './types/GlobalState';
 import { Column } from './types/Column';
 import { Card } from './types/Card';
 
+import * as api from './api';
 import useLocalStorage from './hooks/useLocalStorage';
+import { LOCAL_STORAGE_KEY } from './constants';
 
-interface GlobalAppContext {
+export interface GlobalAppContext {
   state: GlobalState;
-  updateColumn: (columnId: string, value: Partial<Column>) => void;
+  updateColumn: (columnId: string, value: Partial<Pick<Column, 'title' | 'weight'>>) => void;
   addCard: (columnId: string, value: Card) => void;
+  removeCard: (columnId: string, cardId: string) => void;
   addColumn: (value: Column) => void;
   removeColumn: (columnId: string) => void;
 }
@@ -38,71 +41,20 @@ const defaultState = {
 
 const AppContext = createContext<GlobalAppContext | null>(null);
 
+const AppConsumer = AppContext.Consumer;
+
 interface Props {
   children?: React.ReactNode;
 }
 
 const AppProvider: React.FunctionComponent<Props> = props => {
-  const [state, setState] = useLocalStorage<GlobalState>('trello', defaultState);
+  const [state, setState] = useLocalStorage<GlobalState>(LOCAL_STORAGE_KEY, defaultState);
 
-  /**
-   * Allows for partial column updates
-   * 
-   * @param columnId The ID of the column
-   * @param value The values to override the column with
-   */
-  const updateColumn = (columnId: string, value: Partial<Column>): void => {
-    if (!state.columnsById[columnId]) {
-      console.warn('cannot update missing column', columnId);
-    }
-
-    setState({
-      ...state,
-      columnsById: {
-        ...state.columnsById,
-        [columnId]: {
-          ...state.columnsById[columnId],
-          ...value,
-        },
-      },
-    });
-  };
-
-  const addCard = (columnId: string, value: Card): void => {
-    setState({
-      ...state,
-      columnsById: {
-        ...state.columnsById,
-        [columnId]: {
-          ...state.columnsById[columnId],
-          cardsById: {
-            ...state.columnsById[columnId].cardsById,
-            [value.id]: value,
-          },
-        },
-      },
-    });
-  };
-
-  const addColumn = (value: Column): void => {
-    setState({
-      ...state,
-      columnsById: {
-        ...state.columnsById,
-        [value.id]: value,
-      },
-    });
-  };
-
-  const removeColumn = (columnId: string) => {
-    const nextColumns = Object.assign({}, state.columnsById);
-    delete nextColumns[columnId];
-
-    setState({
-      ...state,
-      columnsById: nextColumns,
-    });
-  };
+  const updateColumn = api.updateColumn.bind(null, state, setState);
+  const addCard = api.addCard.bind(null, state, setState);
+  const removeCard = api.removeCard.bind(null, state, setState);
+  const addColumn = api.addColumn.bind(null, state, setState);
+  const removeColumn = api.removeColumn.bind(null, state, setState);
 
   return (
     <AppContext.Provider
@@ -110,6 +62,7 @@ const AppProvider: React.FunctionComponent<Props> = props => {
         state,
         updateColumn,
         addCard,
+        removeCard,
         addColumn,
         removeColumn,
       }}
@@ -121,4 +74,5 @@ const AppProvider: React.FunctionComponent<Props> = props => {
 export {
   AppContext,
   AppProvider,
+  AppConsumer,
 };

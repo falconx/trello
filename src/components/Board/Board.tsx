@@ -54,7 +54,11 @@ const Board: React.FunctionComponent = () => {
           <li key={column.id}>
             <Column {...column}>
               {Object.values(column.cardsById).map(card => (
-                <Card key={card.id} {...card} />
+                <Card
+                  key={card.id}
+                  columnId={column.id}
+                  {...card}
+                />
               ))}
             </Column>
           </li>
