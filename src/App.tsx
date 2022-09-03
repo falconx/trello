@@ -1,25 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import Board from './components/Board';
+
+import { Card } from './types/Card';
+
+import './App.module.css';
+
+const cards: Card[] = [
+  { id: '0', title: 'Example 1', weight: 0 },
+  { id: '1', title: 'Example 2', weight: 1 },
+];
+
+const App: React.FunctionComponent = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Board cards={cards} />
   );
 }
 

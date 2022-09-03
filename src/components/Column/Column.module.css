@@ -1,0 +1,14 @@
+.root {
+  width: 270px;
+  padding: var(--space-2);
+  border-radius: 3px;
+  background-color: var(--c-column);
+}
+
+.card + .card {
+  margin-top: var(--space-1);
+}
+
+.title {
+  margin-bottom: var(--space-2);
+}

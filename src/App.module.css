@@ -1,0 +1,20 @@
+:root {
+  /* spacing scale */
+  --space-1: 0.625rem;
+  --space-2: 0.75rem;
+  --space-3: 0.875rem;
+  --space-4: 1rem;
+  --space-5: 1.125rem;
+
+  /* generic colors */
+  --c-white: #fff;
+  --c-grey: #ebecf0;
+
+  /* component colors */
+  --c-card: var(--c-white);
+  --c-column: var(--c-grey);
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
