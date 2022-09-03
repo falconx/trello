@@ -91,12 +91,12 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
             </Button>
           </form>
         ) : (
-          <button
+          <Button
             className={styles.toggleAdd}
             onClick={() => setIsAddingCard(true)}
           >
             Add a card
-          </button>
+          </Button>
         )}
       </div>
     </div>

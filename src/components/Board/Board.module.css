@@ -1,6 +1,9 @@
 .columns {
   display: flex;
+  align-items: flex-start;
+  width: max-content;
   padding: var(--space-1);
+  overflow-x: auto;
 }
 
 .columns > * + * {

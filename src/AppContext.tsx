@@ -10,6 +10,7 @@ interface GlobalAppContext {
   state: GlobalState;
   updateColumn: (columnId: string, value: Partial<Column>) => void;
   addCard: (columnId: string, value: Card) => void;
+  addColumn: (value: Column) => void;
 }
 
 const defaultState = {
@@ -82,12 +83,23 @@ const AppProvider: React.FunctionComponent<Props> = props => {
     });
   };
 
+  const addColumn = (value: Column): void => {
+    setState({
+      ...state,
+      columnsById: {
+        ...state.columnsById,
+        [value.id]: value,
+      },
+    });
+  };
+
   return (
     <AppContext.Provider
       value={{
         state,
         updateColumn,
         addCard,
+        addColumn,
       }}
       {...props}
     />
