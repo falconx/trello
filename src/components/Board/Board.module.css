@@ -1,8 +1,8 @@
-.root {
+.columns {
   display: flex;
   padding: var(--space-1);
 }
 
-.root > * + * {
+.columns > * + * {
   margin-left: var(--space-2);
 }

@@ -5,7 +5,7 @@ import { Props as CardProps } from '../Card';
 
 import styles from './Column.module.css';
 
-type Props = IColumn & {
+type Props = Pick<IColumn, 'id' | 'title' | 'weight'> & {
   children?: React.ReactElement<CardProps> | Array<React.ReactElement<CardProps>>;
 };
 
