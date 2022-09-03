@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AppContext } from '../../AppContext';
 import { Props as CardProps } from '../Card';
 import VisuallyHidden from '../VisuallyHidden';
-import Button from '../Button';
+import Button, { Variant as ButtonVariant } from '../Button';
 
 import { Column as IColumn } from '../../types/Column';
 
@@ -94,13 +94,17 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
             </Button>
           </form>
         ) : (
-          <Button
-            className={styles.toggleAdd}
-            onClick={() => setIsAddingCard(true)}
-          >
+          <Button onClick={() => setIsAddingCard(true)}>
             Add a card
           </Button>
         )}
+
+        <Button
+          variant={ButtonVariant.Remove}
+          onClick={() => ctx?.removeColumn(id)}
+        >
+          Remove column
+        </Button>
       </div>
     </div>
   );

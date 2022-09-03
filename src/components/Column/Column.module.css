@@ -13,10 +13,7 @@
   border: none;
   background: none;
   cursor: pointer;
-}
 
-.title,
-.toggleAdd {
   /* left aligns column title with card text */
   padding-left: var(--space-3);
 }

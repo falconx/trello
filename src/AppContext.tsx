@@ -11,6 +11,7 @@ interface GlobalAppContext {
   updateColumn: (columnId: string, value: Partial<Column>) => void;
   addCard: (columnId: string, value: Card) => void;
   addColumn: (value: Column) => void;
+  removeColumn: (columnId: string) => void;
 }
 
 const defaultState = {
@@ -93,6 +94,16 @@ const AppProvider: React.FunctionComponent<Props> = props => {
     });
   };
 
+  const removeColumn = (columnId: string) => {
+    const nextColumns = Object.assign({}, state.columnsById);
+    delete nextColumns[columnId];
+
+    setState({
+      ...state,
+      columnsById: nextColumns,
+    });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -100,6 +111,7 @@ const AppProvider: React.FunctionComponent<Props> = props => {
         updateColumn,
         addCard,
         addColumn,
+        removeColumn,
       }}
       {...props}
     />

@@ -16,7 +16,10 @@ const Card: React.FunctionComponent<Props> = ({ title, children }) => {
 
   return (
     <>
-      <div className={styles.root}>
+      <div
+        className={styles.root}
+        onClick={() => setShowEditModal(true)}
+      >
         <h3>{title}</h3>
 
         {children}

@@ -12,6 +12,7 @@
   --c-white: #fff;
   --c-grey: #ebecf0;
   --c-blue: #0079bf;
+  --c-red: #d1576e;
 
   /* component colors */
   --c-overlay: #000000a3;
@@ -19,6 +20,8 @@
   --c-column: var(--c-grey);
   --c-button-primary: var(--c-blue);
   --c-button-primary-text: var(--c-white);
+  --c-button-remove: transparent;
+  --c-button-remove-text: var(--c-red);
 }
 
 body {

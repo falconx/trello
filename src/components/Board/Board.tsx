@@ -41,6 +41,7 @@ const Board: React.FunctionComponent = () => {
     });
 
     // reset add new column fields
+    setIsAddingColumn(false);
     setNewColumnTitle('');
   };
   
