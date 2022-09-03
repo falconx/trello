@@ -42,6 +42,9 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
       title: newCardTitle,
       weight: 0,
     });
+
+    // reset add new card fields
+    setNewCardTitle('');
   };
 
   return (
