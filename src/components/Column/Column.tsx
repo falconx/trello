@@ -60,6 +60,10 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
             type="text"
             value={title}
             onChange={(event) => {
+              if (!event.target.value) {
+                return;
+              }
+
               ctx?.updateColumn(id, {
                 title: event.target.value,
               })
