@@ -22,6 +22,15 @@ const Card: React.FunctionComponent<Props> = ({ title, children }) => {
       >
         <h3>{title}</h3>
 
+        <button
+          className={styles.edit}
+          onClick={event => {
+            event.stopPropagation();
+
+            setShowEditModal(true);
+          }}
+        >Edit</button>
+
         {children}
       </div>
 

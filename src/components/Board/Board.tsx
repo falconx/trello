@@ -70,6 +70,7 @@ const Board: React.FunctionComponent = () => {
                 <VisuallyHidden as="span">Add new card title</VisuallyHidden>
 
                 <textarea
+                  className={styles.newColumnTitle}
                   value={newColumnTitle}
                   onChange={event => setNewColumnTitle(event.target.value)}
                   placeholder="Enter list title…"
@@ -86,7 +87,7 @@ const Board: React.FunctionComponent = () => {
               className={styles.toggleAdd}
               onClick={() => setIsAddingColumn(true)}
             >
-              Add another list
+              Add {Boolean(columns.length) ? 'another' : 'a'} list
             </Button>
           )}
         </li>

@@ -1,5 +1,13 @@
 .root {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   padding: var(--space-3);
   border-radius: 3px;
   background-color: var(--c-card);
+  cursor: pointer;
+}
+
+.edit {
+  margin-left: var(--space-3);
 }

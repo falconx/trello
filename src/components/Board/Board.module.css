@@ -9,3 +9,7 @@
 .columns > * + * {
   margin-left: var(--space-2);
 }
+
+.newColumnTitle {
+  width: 100%;
+}

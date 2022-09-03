@@ -48,65 +48,68 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
   };
 
   return (
-    <div
-      ref={rootEl}
-      className={styles.root}
-    >
-      <VisuallyHidden as="h2">{title}</VisuallyHidden>
+    <>
+      <div
+        ref={rootEl}
+        className={styles.root}
+      >
+        <VisuallyHidden as="h2">{title}</VisuallyHidden>
 
-      <div className={styles.stack}>
-        <input
-          type="text"
-          value={title}
-          onChange={(event) => {
-            ctx?.updateColumn(id, {
-              title: event.target.value,
-            })
-          }}
-          className={styles.title}
-        />
+        <div className={styles.stack}>
+          <input
+            type="text"
+            value={title}
+            onChange={(event) => {
+              ctx?.updateColumn(id, {
+                title: event.target.value,
+              })
+            }}
+            className={styles.title}
+          />
 
-        {hasCards && (
-          <ul className={styles.stack}>
-            {React.Children.map(children, child => (
-              <li key={child?.props.id}>
-                {child}
-              </li>
-            ))}
-          </ul>
-        )}
+          {hasCards && (
+            <ul className={styles.stack}>
+              {React.Children.map(children, child => (
+                <li key={child?.props.id}>
+                  {child}
+                </li>
+              ))}
+            </ul>
+          )}
 
-        {isAddingCard ? (
-          <form onSubmit={addCard}>
-            <label>
-              <VisuallyHidden as="span">Add new card title</VisuallyHidden>
+          {isAddingCard ? (
+            <form onSubmit={addCard}>
+              <label>
+                <VisuallyHidden as="span">Add new card title</VisuallyHidden>
 
-              <textarea
-                value={newCardTitle}
-                onChange={event => setNewCardTitle(event.target.value)}
-                placeholder="Enter a title for this card…"
-                autoFocus
-              />
-            </label>
+                <textarea
+                  className={styles.newCardTitle}
+                  value={newCardTitle}
+                  onChange={event => setNewCardTitle(event.target.value)}
+                  placeholder="Enter a title for this card…"
+                  autoFocus
+                />
+              </label>
 
-            <Button type="submit">
+              <Button type="submit">
+                Add a card
+              </Button>
+            </form>
+          ) : (
+            <Button onClick={() => setIsAddingCard(true)}>
               Add a card
             </Button>
-          </form>
-        ) : (
-          <Button onClick={() => setIsAddingCard(true)}>
-            Add a card
-          </Button>
-        )}
-
-        <Button
-          variant={ButtonVariant.Remove}
-          onClick={() => ctx?.removeColumn(id)}
-        >
-          Remove column
-        </Button>
+          )}
+        </div>
       </div>
-    </div>
+
+      <Button
+        variant={ButtonVariant.Remove}
+        onClick={() => ctx?.removeColumn(id)}
+      >
+        Remove column
+      </Button>
+    </>
   );
 };
 
