@@ -22,8 +22,21 @@
 }
 
 .description {
+  height: 200px;
   width: 100%;
   margin-top: var(--space-1);
+  padding: var(--space-3);
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px -1px #091e4240, 0 0 0 1px #091e4214;
+  resize: none;
+
+  /* clamp up to 3 lines */
+  /* https://css-tricks.com/almanac/properties/l/line-clamp */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
 }
 
 .content {
@@ -37,6 +50,7 @@
 }
 
 .right {
-  width: 100%;
-  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }

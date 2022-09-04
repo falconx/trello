@@ -2,18 +2,19 @@ import React, { useContext, useState } from 'react';
 
 import { AppContext } from '../../AppContext';
 import EditModal from '../EditModal';
+import Button, { Variant as ButtonVariant } from '../Button';
 
 import { Card as ICard } from '../../types/Card';
 
 import styles from './Card.module.css';
 
-export type Props = ICard & {
-  children?: React.ReactNode;
-};
+export type Props = ICard;
 
-const Card: React.FunctionComponent<Props> = ({ id: cardId, title, description, children }) => {
+const Card: React.FunctionComponent<Props> = props => {
   const ctx = useContext(AppContext);
   const [showEditModal, setShowEditModal] = useState(false);
+
+  const { id: cardId, title, description } = props;
 
   return (
     <>
@@ -21,25 +22,28 @@ const Card: React.FunctionComponent<Props> = ({ id: cardId, title, description, 
         className={styles.root}
         onClick={() => setShowEditModal(true)}
       >
-        <h3>{title}</h3>
+        <div className={styles.header}>
+          <h3 className={styles.title}>{title}</h3>
 
-        <button
-          className={styles.edit}
-          onClick={event => {
-            // prevent the outer, non-focusable element, click handler being fired
-            event.stopPropagation();
+          <Button
+            variant={ButtonVariant.Secondary}
+            onClick={event => {
+              // prevent the outer, non-focusable element, click handler being fired
+              event.stopPropagation();
 
-            setShowEditModal(true);
-          }}
-        >Edit</button>
+              setShowEditModal(true);
+            }}
+          >Edit</Button>
+        </div>
 
-        {children}
+        {description && (
+          <p className={styles.description}>{description}</p>
+        )}
       </div>
 
       {showEditModal && (
         <EditModal
-          title={title}
-          description={description}
+          {...props}
           onClose={() => setShowEditModal(false)}
           onRemoveCard={() => ctx.removeCard(cardId)}
           onUpdate={value => {
