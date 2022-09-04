@@ -7,7 +7,9 @@ import './App.module.css';
 
 const App: React.FunctionComponent = () => (
   <AppProvider>
-    <Board />
+    <main>
+      <Board />
+    </main>
 
     <div id="modal-root" />
   </AppProvider>
