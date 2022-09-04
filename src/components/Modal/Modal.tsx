@@ -33,7 +33,12 @@ const Modal: React.FunctionComponent<ModalProps> = ({ onClose, children }) => (
       className={styles.overlay}
       onClick={onClose}
     >
-      <div className={styles.content}>
+      <div
+        className={styles.content}
+        onClick={event => {
+          event.stopPropagation();
+        }}
+      >
         {children}
       </div>
     </div>
