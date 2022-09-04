@@ -7,9 +7,10 @@ interface PortalProps {
   children?: React.ReactNode;
 }
 
+const el = document.createElement('div');
+
 const Portal: React.FunctionComponent<PortalProps> = ({ children }) => {
   const modalRoot = document.getElementById('modal-root') as HTMLElement;
-  const el = document.createElement('div');
 
   useEffect(() => {
     modalRoot.appendChild(el);
