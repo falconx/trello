@@ -7,23 +7,28 @@ import { Column } from './types/Column';
 import * as api from './api';
 
 const initialState: GlobalState = {
-  columnsById: {
-    'column-initial': {
-      id: 'column-initial',
+  columns: [
+    {
+      id: 'column-initial-1',
       title: 'Column 1',
       weight: 0,
-      cardsById: {
-        'card-initial': {
-          id: 'card-initial',
-          title: 'Card 1',
-          weight: 0,
-        },
-      },
     },
-  },
+  ],
+  cards: [
+    {
+      id: 'card-initial-1',
+      columnId: 'column-initial-1',
+      title: 'Card 1',
+      weight: 0,
+    },
+    {
+      id: 'card-initial-2',
+      columnId: 'column-initial-1',
+      title: 'Card 2',
+      weight: 1,
+    },
+  ],
 };
-
-const setState = jest.fn();
 
 describe('AppContext', () => {
   beforeEach(() => {
@@ -34,34 +39,39 @@ describe('AppContext', () => {
   it('addCard', () => {
     const card: Card = {
       id: 'card-new',
+      columnId: 'column-initial-1',
       title: 'Card',
       weight: 0,
     };
 
-    api.addCard(initialState, setState, 'column-initial', card);
+    const response = api.addCard(initialState, card);
 
-    let nextState = cloneDeep(initialState);
-    nextState.columnsById['column-initial'].cardsById['card-new'] = card;
+    const nextState = cloneDeep(initialState);
+    nextState.cards.push(card);
 
-    expect(setState).toBeCalledWith(nextState);
+    expect(initialState.cards.length).toBe(2);
+    expect(response.cards.length).toBe(3);
+    expect(response).toMatchObject(nextState);
   });
 
   describe('removeCard', () => {
-    it('correct removes the specified card', () => {
-      api.removeCard(initialState, setState, 'column-initial', 'card-initial');
+    it('removes the specified card', () => {
+      const response = api.removeCard(initialState, 'card-initial-1');
 
-      let nextState = cloneDeep(initialState);
-      delete nextState.columnsById['column-initial'].cardsById['card-initial'];
+      const nextState = cloneDeep(initialState);
+      nextState.cards = nextState.cards.filter(card => card.id !== 'card-initial-1');
 
-      expect(setState).toBeCalledWith(nextState);
+      expect(initialState.cards.length).toBe(2);
+      expect(response.cards.length).toBe(1);
+      expect(response).toMatchObject(nextState);
     });
 
     it('does not update state when providing an invalid card ID', () => {
       const INVALID_CARD_ID = 'INVALID_CARD_ID';
 
-      api.removeCard(initialState, setState, 'column-initial', INVALID_CARD_ID);
+      const response = api.removeCard(initialState, INVALID_CARD_ID);
 
-      expect(setState).not.toBeCalled();
+      expect(response).toBe(initialState);
     });
   });
 
@@ -70,51 +80,74 @@ describe('AppContext', () => {
       id: 'column-new',
       title: 'Column',
       weight: 0,
-      cardsById: {},
     };
 
-    api.addColumn(initialState, setState, column);
+    const response = api.addColumn(initialState, column);
 
-    let nextState = cloneDeep(initialState);
-    nextState.columnsById['column-new'] = column;
+    const nextState = cloneDeep(initialState);
+    nextState.columns.push(column);
 
-    expect(setState).toBeCalledWith(nextState);
+    expect(initialState.columns.length).toBe(1);
+    expect(response.columns.length).toBe(2);
+    expect(response).toMatchObject(nextState);
   });
 
-  it('removeColumn', () => {
-    api.removeColumn(initialState, setState, 'column-initial');
+  describe('removeColumn', () => {
+    it('removes only the specified column', () => {
+      const response = api.removeColumn(initialState, 'column-initial-1');
 
-    let nextState = cloneDeep(initialState);
-    delete nextState.columnsById['column-initial'];
+      const nextState = cloneDeep(initialState);
+      const nextColumns = nextState.columns.filter(column => column.id !== 'column-initial-1');
 
-    expect(setState).toBeCalledWith(nextState);
+      expect(initialState.columns.length).toBe(1);
+      expect(response.columns.length).toBe(0);
+      expect(response).toMatchObject(expect.objectContaining({
+        columns: nextColumns,
+      }));
+    });
+
+    // TODO: improve test by having multiple columns to ensure cards from other columns are not removed
+    it('removes all associated cards', () => {
+      const response = api.removeColumn(initialState, 'column-initial-1');
+
+      const nextState = cloneDeep(initialState);
+      const nextCards = nextState.cards.filter(card => card.columnId !== 'column-initial-1');
+    
+      expect(initialState.cards.length).toBe(2);
+      expect(response.cards.length).toBe(0);
+      expect(response).toMatchObject(expect.objectContaining({
+        cards: nextCards,
+      }));
+    });
   });
 
   describe('updateColumn', () => {
-    const COLUMN_TITLE = 'COLUMN_TITLE';
-    const COLUMN_WEIGHT = 100;
+    const NEW_COLUMN_TITLE = 'NEW_COLUMN_TITLE';
+    const NEW_COLUMN_WEIGHT = 100;
 
-    it('correct updates the specified column', () => {
-      api.updateColumn(initialState, setState, 'column-initial', {
-        title: COLUMN_TITLE,
-        weight: COLUMN_WEIGHT,
+    it('updates the specified column', () => {
+      const response = api.updateColumn(initialState, 'column-initial-1', {
+        title: NEW_COLUMN_TITLE,
+        weight: NEW_COLUMN_WEIGHT,
       });
 
-      let nextState = cloneDeep(initialState);
-      nextState.columnsById['column-initial'].title = COLUMN_TITLE;
-      nextState.columnsById['column-initial'].weight = COLUMN_WEIGHT;
+      const nextState = cloneDeep(initialState);
 
-      expect(setState).toBeCalledWith(nextState);
+      let column = nextState.columns.find(column => column.id === 'column-initial-1') as Column;
+      column.title = NEW_COLUMN_TITLE;
+      column.weight = NEW_COLUMN_WEIGHT;
+
+      expect(response).toMatchObject(nextState);
     });
 
     it('does not update state when providing an invalid column ID', () => {
       const INVALID_COLUMN_ID = 'INVALID_COLUMN_ID';
 
-      api.updateColumn(initialState, setState, INVALID_COLUMN_ID, {
-        title: COLUMN_TITLE,
+      const response = api.updateColumn(initialState, INVALID_COLUMN_ID, {
+        title: NEW_COLUMN_TITLE,
       });
 
-      expect(setState).not.toBeCalled();
+      expect(response).toBe(initialState);
     });
   });
 });

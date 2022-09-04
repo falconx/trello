@@ -37,8 +37,9 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
       return;
     }
 
-    ctx?.addCard(id, {
+    ctx.addCard({
       id: uuidv4(),
+      columnId: id,
       title: newCardTitle,
       weight: 0,
     });

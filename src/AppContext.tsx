@@ -8,38 +8,32 @@ import * as api from './api';
 import useLocalStorage from './hooks/useLocalStorage';
 import { LOCAL_STORAGE_KEY } from './constants';
 
+type UpdateColumnValue = Partial<Pick<Column, 'title' | 'weight'>>;
+
 export interface GlobalAppContext {
   state: GlobalState;
-  updateColumn: (columnId: string, value: Partial<Pick<Column, 'title' | 'weight'>>) => void;
-  addCard: (columnId: string, value: Card) => void;
-  removeCard: (columnId: string, cardId: string) => void;
+  updateColumn: (columnId: string, value: UpdateColumnValue) => void;
+  addCard: (value: Card) => void;
+  removeCard: (cardId: string) => void;
   addColumn: (value: Column) => void;
   removeColumn: (columnId: string) => void;
 }
 
-const defaultState = {
-  columnsById: {
-    '0': {
-      id: '0',
-      title: 'Column 1',
-      weight: 0,
-      cardsById: {
-        '0': { id: '0', title: 'Example 1', weight: 0 },
-        '1': { id: '1', title: 'Example 2', weight: 1 },
-      },
-    },
-    '1': {
-      id: '1',
-      title: 'Column 2',
-      weight: 1,
-      cardsById: {
-        '0': { id: '0', title: 'Example 1', weight: 0 },
-      },
-    },
-  },
+const defaultState: GlobalState = {
+  columns: [],
+  cards: [],
 };
 
-const AppContext = createContext<GlobalAppContext | null>(null);
+const noop = () => {};
+
+const AppContext = createContext<GlobalAppContext>({
+  state: defaultState,
+  updateColumn: noop,
+  addCard: noop,
+  removeCard: noop,
+  addColumn: noop,
+  removeColumn: noop,
+});
 
 const AppConsumer = AppContext.Consumer;
 
@@ -50,21 +44,19 @@ interface Props {
 const AppProvider: React.FunctionComponent<Props> = props => {
   const [state, setState] = useLocalStorage<GlobalState>(LOCAL_STORAGE_KEY, defaultState);
 
-  const updateColumn = api.updateColumn.bind(null, state, setState);
-  const addCard = api.addCard.bind(null, state, setState);
-  const removeCard = api.removeCard.bind(null, state, setState);
-  const addColumn = api.addColumn.bind(null, state, setState);
-  const removeColumn = api.removeColumn.bind(null, state, setState);
+  // TODO: opted for conciseness here but type safety could be improved
+  // by ensuring the context and api function signatures are matched
+  const update = (fn: Function, ...args: any) => setState(fn(state, ...args));
 
   return (
     <AppContext.Provider
       value={{
         state,
-        updateColumn,
-        addCard,
-        removeCard,
-        addColumn,
-        removeColumn,
+        updateColumn: update.bind(null, api.updateColumn),
+        addCard: update.bind(null, api.addCard),
+        removeCard: update.bind(null, api.removeCard),
+        addColumn: update.bind(null, api.addColumn),
+        removeColumn: update.bind(null, api.removeColumn),
       }}
       {...props}
     />

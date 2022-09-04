@@ -13,12 +13,10 @@ import styles from './Board.module.css';
 import columnStyles from '../Column/Column.module.css';
 
 const Board: React.FunctionComponent = () => {
-  const ctx = useContext(AppContext);
+  const { state, ...ctx } = useContext(AppContext);
   const addColumnEl = useRef<HTMLLIElement>(null);
   const [isAddingColumn, setIsAddingColumn] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState('');
-
-  const columns = Object.values(ctx?.state.columnsById || {});
 
   // hide the add new card UI when clicking outside the column
   useOnClickOutside(addColumnEl, () => {
@@ -33,11 +31,10 @@ const Board: React.FunctionComponent = () => {
       return;
     }
 
-    ctx?.addColumn({
+    ctx.addColumn({
       id: uuidv4(),
       title: newColumnTitle,
       weight: 0,
-      cardsById: {},
     });
 
     // reset add new column fields
@@ -50,19 +47,22 @@ const Board: React.FunctionComponent = () => {
       <VisuallyHidden as="h1">Trello Board</VisuallyHidden>
 
       <ul className={styles.columns}>
-        {columns.map(column => (
-          <li key={column.id}>
-            <Column {...column}>
-              {Object.values(column.cardsById).map(card => (
-                <Card
-                  key={card.id}
-                  columnId={column.id}
-                  {...card}
-                />
-              ))}
-            </Column>
-          </li>
-        ))}
+        {state.columns.map(column => {
+          const cards = state.cards.filter(card => card.columnId === column.id);
+
+          return (
+            <li key={column.id}>
+              <Column {...column}>
+                {cards.map(card => (
+                  <Card
+                    key={card.id}
+                    {...card}
+                  />
+                ))}
+              </Column>
+            </li>
+          );
+        })}
 
         <li
           ref={addColumnEl}
@@ -91,7 +91,7 @@ const Board: React.FunctionComponent = () => {
               className={styles.toggleAdd}
               onClick={() => setIsAddingColumn(true)}
             >
-              Add {Boolean(columns.length) ? 'another' : 'a'} list
+              Add {Boolean(state.columns.length) ? 'another' : 'a'} list
             </Button>
           )}
         </li>

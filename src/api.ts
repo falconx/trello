@@ -1,34 +1,24 @@
-import { GlobalState } from "./types/GlobalState";
-import { Column } from "./types/Column";
-import { Card } from "./types/Card";
+import cloneDeep from 'lodash/cloneDeep';
+
+import { GlobalState } from './types/GlobalState';
+import { Column } from './types/Column';
+import { Card } from './types/Card';
 
 /**
  * Adds a card to state
  *
  * @param state Global state
  * @param setState Fn to set state
- * @param columnId The ID of the column that the card belongs to
  * @param value The card to add
  */
 export const addCard = (
   state: GlobalState,
-  setState: (state: GlobalState) => void,
-  columnId: string,
   value: Card
-): void => {
-  setState({
+): GlobalState => {
+  return {
     ...state,
-    columnsById: {
-      ...state.columnsById,
-      [columnId]: {
-        ...state.columnsById[columnId],
-        cardsById: {
-          ...state.columnsById[columnId].cardsById,
-          [value.id]: value,
-        },
-      },
-    },
-  });
+    cards: [...state.cards, value],
+  };
 };
 
 /**
@@ -36,36 +26,23 @@ export const addCard = (
  *
  * @param state Global state
  * @param setState Fn to set state
- * @param columnId ID of the column to remove
  * @param cardId ID of the card to remove
  */
 export const removeCard = (
   state: GlobalState,
-  setState: (state: GlobalState) => void,
-  columnId: string,
   cardId: string
-): void => {
-  const column = state.columnsById[columnId];
-  const card = column?.cardsById?.[cardId];
+): GlobalState => {
+  const nextCards = cloneDeep(state.cards).filter(card => card.id !== cardId);
 
-  if (!card) {
+  if (state.cards.length === nextCards.length) {
     console.warn('card was not removed as it could not be found');
-    return;
+    return state;
   }
 
-  const nextCards = Object.assign({}, column.cardsById);
-  delete nextCards[cardId];
-
-  setState({
+  return {
     ...state,
-    columnsById: {
-      ...state.columnsById,
-      [columnId]: {
-        ...state.columnsById[columnId],
-        cardsById: nextCards,
-      },
-    },
-  });
+    cards: nextCards,
+  };
 };
 
 /**
@@ -77,16 +54,12 @@ export const removeCard = (
  */
 export const addColumn = (
   state: GlobalState,
-  setState: (state: GlobalState) => void,
   value: Column
-): void => {
-  setState({
+): GlobalState => {
+  return {
     ...state,
-    columnsById: {
-      ...(state.columnsById || {}),
-      [value.id]: value,
-    },
-  });
+    columns: [...state.columns, value],
+  };
 };
 
 /**
@@ -98,16 +71,23 @@ export const addColumn = (
  */
 export const removeColumn = (
   state: GlobalState,
-  setState: (state: GlobalState) => void,
   columnId: string
-): void => {
-  const nextColumns = Object.assign({}, state.columnsById);
-  delete nextColumns[columnId];
+): GlobalState => {
+  const nextState = cloneDeep(state);
+  const nextColumns = nextState.columns.filter(column => column.id !== columnId);
 
-  setState({
+  if (state.cards.length === nextColumns.length) {
+    console.warn('column was not removed as it could not be found');
+    return state;
+  }
+
+  const nextCards = nextState.cards.filter(card => card.columnId !== columnId);
+
+  return {
     ...state,
-    columnsById: nextColumns,
-  });
+    columns: nextColumns,
+    cards: nextCards,
+  };
 };
 
 /**
@@ -120,23 +100,25 @@ export const removeColumn = (
  */
 export const updateColumn = (
   state: GlobalState,
-  setState: (state: GlobalState) => void,
   columnId: string,
   value: Partial<Pick<Column, 'title' | 'weight'>>
-): void => {
-  if (!state.columnsById[columnId]) {
+): GlobalState => {
+  const nextColumns = cloneDeep(state.columns);
+
+  let columnIndex = nextColumns.findIndex(column => column.id === columnId);
+
+  if (columnIndex === -1) {
     console.warn("cannot update missing column", columnId);
-    return;
+    return state;
   }
 
-  setState({
+  nextColumns[columnIndex] = {
+    ...nextColumns[columnIndex],
+    ...value,
+  };
+
+  return {
     ...state,
-    columnsById: {
-      ...state.columnsById,
-      [columnId]: {
-        ...state.columnsById[columnId],
-        ...value,
-      },
-    },
-  });
+    columns: nextColumns,
+  };
 };

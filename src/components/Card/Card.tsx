@@ -9,11 +9,10 @@ import { Card as ICard } from '../../types/Card';
 import styles from './Card.module.css';
 
 export type Props = ICard & {
-  columnId: string;
   children?: React.ReactNode;
 };
 
-const Card: React.FunctionComponent<Props> = ({ columnId, id: cardId, title, children }) => {
+const Card: React.FunctionComponent<Props> = ({ id, title, children }) => {
   const ctx = useContext(AppContext);
   const [showEditModal, setShowEditModal] = useState(false);
   const [addNewTitle, setEditNewTitle] = useState('');
@@ -56,7 +55,7 @@ const Card: React.FunctionComponent<Props> = ({ columnId, id: cardId, title, chi
 
           <Button
             variant={ButtonVariant.Remove}
-            onClick={() => ctx?.removeCard(columnId, cardId)}
+            onClick={() => ctx.removeCard(id)}
           >Remove card</Button>
         </Modal>
       )}
