@@ -3,6 +3,11 @@
   border-radius: 3px;
 }
 
+.base:disabled {
+  color: var(--c-button-disabled-text);
+  background-color: var(--c-button-disabled);
+}
+
 .primary {
   composes: base;
 
@@ -14,9 +19,20 @@
   outline-color: var(--c-button-primary);
 }
 
+.secondary {
+  composes: base;
+
+  padding: var(--space-1);
+  line-height: 1;
+  color: var(--c-button-secondary-text);
+  background-color: var(--c-button-secondary);
+}
+
 .remove {
   composes: base;
 
+  padding: 0;
+  line-height: 1;
   color: var(--c-button-remove-text);
   background-color: var(--c-button-remove);
 }

@@ -18,7 +18,7 @@ const Portal: React.FunctionComponent<PortalProps> = ({ children }) => {
     return () => {
       modalRoot.removeChild(el);
     };
-  }, [modalRoot, el]);
+  }, [modalRoot]);
 
   return ReactDOM.createPortal(children, el);
 };

@@ -3,3 +3,5 @@ export interface Column {
   title: string;
   weight: number;
 }
+
+export type EditableColumnFields = Partial<Pick<Column, 'title' | 'weight'>>;

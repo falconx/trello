@@ -57,20 +57,24 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
         <VisuallyHidden as="h2">{title}</VisuallyHidden>
 
         <div className={styles.stack}>
-          <input
-            type="text"
-            value={title}
-            onChange={(event) => {
-              if (!event.target.value) {
-                return;
-              }
+          <label>
+            <VisuallyHidden as="span">Column title</VisuallyHidden>
 
-              ctx?.updateColumn(id, {
-                title: event.target.value,
-              })
-            }}
-            className={styles.title}
-          />
+            <input
+              type="text"
+              value={title}
+              onChange={(event) => {
+                if (!event.target.value) {
+                  return;
+                }
+
+                ctx?.updateColumn(id, {
+                  title: event.target.value,
+                })
+              }}
+              className={styles.title}
+            />
+          </label>
 
           {hasCards && (
             <ul className={styles.stack}>
@@ -110,7 +114,7 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
 
       <Button
         variant={ButtonVariant.Remove}
-        onClick={() => ctx?.removeColumn(id)}
+        onClick={() => ctx.removeColumn(id)}
       >
         Remove column
       </Button>

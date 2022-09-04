@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stack > * + * {
+  margin-top: var(--space-7);
+}
+
+.title {
+  border: none;
+  background: none;
+}
+
+.title:invalid {
+  border: 2px solid var(--c-red);
+}
+
+.label {
+  width: 100%;
+}
+
+.description {
+  width: 100%;
+  margin-top: var(--space-1);
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.left {
+  flex: 1 1 auto;
+}
+
+.right {
+  width: 100%;
+  max-width: 200px;
+}

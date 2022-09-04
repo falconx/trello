@@ -13,7 +13,6 @@
 .title {
   border: none;
   background: none;
-  cursor: pointer;
 
   /* left aligns column title with card text */
   padding-left: var(--space-3);

@@ -3,6 +3,7 @@ import styles from './Button.module.css';
 // maps variant prop to class name
 export enum Variant {
   Primary = 'primary',
+  Secondary = 'secondary',
   Remove = 'remove',
 }
 

@@ -5,3 +5,5 @@ export interface Card {
   description?: string;
   weight: number;
 }
+
+export type EditableCardFields = Partial<Pick<Card, 'title' | 'description' | 'weight'>>;

@@ -1,8 +1,8 @@
 import cloneDeep from 'lodash/cloneDeep';
 
 import { GlobalState } from './types/GlobalState';
-import { Column } from './types/Column';
-import { Card } from './types/Card';
+import { Column, EditableColumnFields } from './types/Column';
+import { Card, EditableCardFields } from './types/Card';
 
 /**
  * Adds a card to state
@@ -76,8 +76,8 @@ export const removeColumn = (
   const nextState = cloneDeep(state);
   const nextColumns = nextState.columns.filter(column => column.id !== columnId);
 
-  if (state.cards.length === nextColumns.length) {
-    console.warn('column was not removed as it could not be found');
+  if (state.columns.length === nextColumns.length) {
+    console.warn('column was not removed as it could not be found', columnId);
     return state;
   }
 
@@ -101,14 +101,14 @@ export const removeColumn = (
 export const updateColumn = (
   state: GlobalState,
   columnId: string,
-  value: Partial<Pick<Column, 'title' | 'weight'>>
+  value: EditableColumnFields
 ): GlobalState => {
   const nextColumns = cloneDeep(state.columns);
 
   let columnIndex = nextColumns.findIndex(column => column.id === columnId);
 
   if (columnIndex === -1) {
-    console.warn("cannot update missing column", columnId);
+    console.warn('cannot update missing column', columnId);
     return state;
   }
 
@@ -120,5 +120,38 @@ export const updateColumn = (
   return {
     ...state,
     columns: nextColumns,
+  };
+};
+
+/**
+ * Allows for partial card updates
+ *
+ * @param state Global state
+ * @param setState Fn to set state
+ * @param cardId The ID of the card
+ * @param value The values to override the card with
+ */
+export const updateCard = (
+  state: GlobalState,
+  cardId: string,
+  value: EditableCardFields
+): GlobalState => {
+  const nextCards = cloneDeep(state.cards);
+
+  let cardIndex = nextCards.findIndex(card => card.id === cardId);
+
+  if (cardIndex === -1) {
+    console.warn('cannot update missing card', cardId);
+    return state;
+  }
+
+  nextCards[cardIndex] = {
+    ...nextCards[cardIndex],
+    ...value,
+  };
+
+  return {
+    ...state,
+    cards: nextCards,
   };
 };

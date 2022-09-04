@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 
 import { AppContext } from '../../AppContext';
-import Modal from '../Modal';
-import Button, { Variant as ButtonVariant } from '../Button';
+import EditModal from '../EditModal';
 
 import { Card as ICard } from '../../types/Card';
 
@@ -12,10 +11,9 @@ export type Props = ICard & {
   children?: React.ReactNode;
 };
 
-const Card: React.FunctionComponent<Props> = ({ id, title, children }) => {
+const Card: React.FunctionComponent<Props> = ({ id: cardId, title, description, children }) => {
   const ctx = useContext(AppContext);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [addNewTitle, setEditNewTitle] = useState('');
 
   return (
     <>
@@ -28,6 +26,7 @@ const Card: React.FunctionComponent<Props> = ({ id, title, children }) => {
         <button
           className={styles.edit}
           onClick={event => {
+            // prevent the outer, non-focusable element, click handler being fired
             event.stopPropagation();
 
             setShowEditModal(true);
@@ -38,26 +37,16 @@ const Card: React.FunctionComponent<Props> = ({ id, title, children }) => {
       </div>
 
       {showEditModal && (
-        <Modal onClose={() => setShowEditModal(false)}>
-          <h2>{title}</h2>
-
-          <form>
-            <label>
-              <input
-                type="text"
-                value={addNewTitle}
-                onChange={event => setEditNewTitle(event.target.value)}
-              />
-            </label>
-
-            <button type="submit" />
-          </form>
-
-          <Button
-            variant={ButtonVariant.Remove}
-            onClick={() => ctx.removeCard(id)}
-          >Remove card</Button>
-        </Modal>
+        <EditModal
+          title={title}
+          description={description}
+          onClose={() => setShowEditModal(false)}
+          onRemoveCard={() => ctx.removeCard(cardId)}
+          onUpdate={value => {
+            ctx.updateCard(cardId, value);
+            setShowEditModal(false);
+          }}
+        />
       )}
     </>
   );

@@ -1,22 +1,21 @@
 import React, { createContext } from 'react';
 
 import { GlobalState } from './types/GlobalState';
-import { Column } from './types/Column';
-import { Card } from './types/Card';
+import { Column, EditableColumnFields } from './types/Column';
+import { Card, EditableCardFields } from './types/Card';
 
 import * as api from './api';
 import useLocalStorage from './hooks/useLocalStorage';
 import { LOCAL_STORAGE_KEY } from './constants';
 
-type UpdateColumnValue = Partial<Pick<Column, 'title' | 'weight'>>;
-
 export interface GlobalAppContext {
   state: GlobalState;
-  updateColumn: (columnId: string, value: UpdateColumnValue) => void;
   addCard: (value: Card) => void;
   removeCard: (cardId: string) => void;
+  updateCard: (cardId: string, value: EditableCardFields) => void;
   addColumn: (value: Column) => void;
   removeColumn: (columnId: string) => void;
+  updateColumn: (columnId: string, value: EditableColumnFields) => void;
 }
 
 const defaultState: GlobalState = {
@@ -28,11 +27,12 @@ const noop = () => {};
 
 const AppContext = createContext<GlobalAppContext>({
   state: defaultState,
-  updateColumn: noop,
   addCard: noop,
   removeCard: noop,
+  updateCard: noop,
   addColumn: noop,
   removeColumn: noop,
+  updateColumn: noop,
 });
 
 const AppConsumer = AppContext.Consumer;
@@ -52,11 +52,12 @@ const AppProvider: React.FunctionComponent<Props> = props => {
     <AppContext.Provider
       value={{
         state,
-        updateColumn: update.bind(null, api.updateColumn),
         addCard: update.bind(null, api.addCard),
         removeCard: update.bind(null, api.removeCard),
+        updateCard: update.bind(null, api.updateCard),
         addColumn: update.bind(null, api.addColumn),
         removeColumn: update.bind(null, api.removeColumn),
+        updateColumn: update.bind(null, api.updateColumn),
       }}
       {...props}
     />

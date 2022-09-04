@@ -4,12 +4,12 @@
   left: 0;
   height: 100vh;
   width: 100vw;
+  padding: 50px;
   background-color: var(--c-overlay);
   cursor: pointer;
 }
 
 .content {
-  margin: 50px;
   margin-left: auto;
   margin-right: auto;
   width: 100%;

@@ -10,6 +10,7 @@
 
   /* generic colors */
   --c-white: #fff;
+  --c-black: #222;
   --c-grey: #ebecf0;
   --c-blue: #0079bf;
   --c-red: #d1576e;
@@ -18,10 +19,15 @@
   --c-overlay: #000000a3;
   --c-card: var(--c-white);
   --c-column: var(--c-grey);
+
   --c-button-primary: var(--c-blue);
   --c-button-primary-text: var(--c-white);
+  --c-button-secondary: var(--c-white);
+  --c-button-secondary-text: var(--c-blue);
   --c-button-remove: transparent;
   --c-button-remove-text: var(--c-red);
+  --c-button-disabled: var(--c-grey);
+  --c-button-disabled-text: var(--c-black);
 }
 
 body {
