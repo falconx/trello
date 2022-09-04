@@ -16,6 +16,7 @@ export interface GlobalAppContext {
   addColumn: (value: Column) => void;
   removeColumn: (columnId: string) => void;
   updateColumn: (columnId: string, value: EditableColumnFields) => void;
+  dragCard: (cardId: string) => void;
 }
 
 const defaultState: GlobalState = {
@@ -33,6 +34,7 @@ const AppContext = createContext<GlobalAppContext>({
   addColumn: noop,
   removeColumn: noop,
   updateColumn: noop,
+  dragCard: noop,
 });
 
 const AppConsumer = AppContext.Consumer;
@@ -48,6 +50,13 @@ const AppProvider: React.FunctionComponent<Props> = props => {
   // by ensuring the context and api function signatures are matched
   const update = (fn: Function, ...args: any) => setState(fn(state, ...args));
 
+  const dragCard = (cardId: string) => {
+    setState({
+      ...state,
+      activeDragCardId: cardId,
+    });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -58,6 +67,7 @@ const AppProvider: React.FunctionComponent<Props> = props => {
         addColumn: update.bind(null, api.addColumn),
         removeColumn: update.bind(null, api.removeColumn),
         updateColumn: update.bind(null, api.updateColumn),
+        dragCard,
       }}
       {...props}
     />

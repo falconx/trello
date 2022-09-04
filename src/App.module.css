@@ -25,6 +25,7 @@
   --c-overlay: #000000a3;
   --c-card: var(--c-white);
   --c-column: var(--c-grey);
+  --c-column-drag-highlight: var(--c-light-blue);
 
   --c-button-primary: var(--c-blue);
   --c-button-primary-text: var(--c-white);

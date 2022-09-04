@@ -6,4 +6,4 @@ export interface Card {
   weight: number;
 }
 
-export type EditableCardFields = Partial<Pick<Card, 'title' | 'description' | 'weight'>>;
+export type EditableCardFields = Partial<Omit<Card, 'id'>>;

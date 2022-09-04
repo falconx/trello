@@ -21,6 +21,7 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
   const rootEl = useRef<HTMLDivElement>(null);
   const [isAddingCard, setIsAddingCard] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState('');
+  const [isHighlighted, setIsHighlighted] = useState(false);
 
   const hasCards = Boolean(React.Children.count(children));
 
@@ -28,6 +29,12 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
   useOnClickOutside(rootEl, () => {
     setIsAddingCard(false);
   });
+
+  // use classnames lib if we end up doing this a lot
+  const rootClasses = [styles.root];
+  if (isHighlighted) {
+    rootClasses.push(styles.highlight);
+  }
 
   const addCard = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,7 +59,37 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
     <>
       <div
         ref={rootEl}
-        className={styles.root}
+        className={rootClasses.join(' ')}
+        draggable
+        onDragEnter={() => {
+          const activeCard = ctx.state.cards.find(card => card.id === ctx.state.activeDragCardId);
+
+          // only highlight columns which the card doesn't already belong to
+          if (activeCard?.columnId !== id) {
+            setIsHighlighted(true);
+          }
+        }}
+        onDragLeave={() => {
+          setIsHighlighted(false);
+        }}
+        onDragEnd={() => {
+          setIsHighlighted(false);
+        }}
+        onDragOver={event => {
+          // prevent default to allow drop
+          event.preventDefault();
+        }}
+        onDrop={event => {
+          // preven`t default action (open as link for some elements)
+          event.preventDefault();
+
+          if (!ctx.state.activeDragCardId) {
+            return;
+          }
+
+          ctx.updateCard(ctx.state.activeDragCardId, { columnId: id });
+          setIsHighlighted(false);
+        }}
       >
         <VisuallyHidden as="h2">{title}</VisuallyHidden>
 
@@ -68,7 +105,7 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
                   return;
                 }
 
-                ctx?.updateColumn(id, {
+                ctx.updateColumn(id, {
                   title: event.target.value,
                 })
               }}
@@ -76,13 +113,20 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
             />
           </label>
 
-          {hasCards && (
+          {(hasCards || isHighlighted) && (
             <ul className={styles.stack}>
               {React.Children.map(children, child => (
                 <li key={child?.props.id}>
                   {child}
                 </li>
               ))}
+
+              {isHighlighted && (
+                <li
+                  aria-hidden="true"
+                  className={styles.dropzone}
+                />
+              )}
             </ul>
           )}
 

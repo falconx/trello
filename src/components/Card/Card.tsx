@@ -21,6 +21,8 @@ const Card: React.FunctionComponent<Props> = props => {
       <div
         className={styles.root}
         onClick={() => setShowEditModal(true)}
+        draggable
+        onDragEnter={() => ctx.dragCard(cardId)}
       >
         <div className={styles.header}>
           <h3 className={styles.title}>{title}</h3>
