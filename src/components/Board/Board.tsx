@@ -6,6 +6,7 @@ import VisuallyHidden from '../VisuallyHidden';
 import Card from '../Card';
 import Column from '../Column';
 import Button from '../Button';
+import Input from '../Input';
 
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 
@@ -68,19 +69,15 @@ const Board: React.FunctionComponent = () => {
           className={columnStyles.root}
         >
           {isAddingColumn ? (
-            <form onSubmit={addColumn}>
-              <label>
-                <VisuallyHidden as="span">Add new card title</VisuallyHidden>
-
-                <input
-                  type="text"
-                  className={styles.newColumnTitle}
-                  value={newColumnTitle}
-                  onChange={event => setNewColumnTitle(event.target.value)}
-                  placeholder="Enter list title…"
-                  autoFocus
-                />
-              </label>
+            <form onSubmit={addColumn} className={styles.stack}>
+              <Input
+                label="Add new card title"
+                type="text"
+                value={newColumnTitle}
+                onChange={event => setNewColumnTitle(event.target.value)}
+                placeholder="Enter list title…"
+                autoFocus
+              />
 
               <Button type="submit">
                 Add list

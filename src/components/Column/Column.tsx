@@ -6,6 +6,7 @@ import { Props as CardProps } from '../Card';
 import VisuallyHidden from '../VisuallyHidden';
 import Button, { Variant as ButtonVariant } from '../Button';
 import EditableTitleField from '../EditableTitleField';
+import Input from '../Input';
 
 import { Column as IColumn } from '../../types/Column';
 
@@ -128,18 +129,14 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
           )}
 
           {isAddingCard ? (
-            <form onSubmit={addCard}>
-              <label>
-                <VisuallyHidden as="span">Add new card title</VisuallyHidden>
-
-                <textarea
-                  className={styles.newCardTitle}
-                  value={newCardTitle}
-                  onChange={event => setNewCardTitle(event.target.value)}
-                  placeholder="Enter a title for this card…"
-                  autoFocus
-                />
-              </label>
+            <form onSubmit={addCard} className={styles.stack}>
+              <Input
+                label="Add new card title"
+                value={newCardTitle}
+                onChange={event => setNewCardTitle(event.target.value)}
+                placeholder="Enter a title for this card…"
+                autoFocus
+              />
 
               <Button type="submit">
                 Add a card
