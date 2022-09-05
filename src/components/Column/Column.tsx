@@ -13,7 +13,7 @@ import useOnClickOutside from '../../hooks/useOnClickOutside';
 
 import styles from './Column.module.css';
 
-type Props = Pick<IColumn, 'id' | 'title' | 'weight'> & {
+type Props = Pick<IColumn, 'id' | 'title'> & {
   children?: React.ReactElement<CardProps> | Array<React.ReactElement<CardProps>>;
 };
 
@@ -49,7 +49,6 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
       id: uuidv4(),
       columnId: id,
       title: newCardTitle,
-      weight: 0,
     });
 
     // reset add new card fields

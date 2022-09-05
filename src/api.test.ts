@@ -11,7 +11,6 @@ const initialState: GlobalState = {
     {
       id: 'column-initial-1',
       title: 'Column 1',
-      weight: 0,
     },
   ],
   cards: [
@@ -19,13 +18,11 @@ const initialState: GlobalState = {
       id: 'card-initial-1',
       columnId: 'column-initial-1',
       title: 'Card 1',
-      weight: 0,
     },
     {
       id: 'card-initial-2',
       columnId: 'column-initial-1',
       title: 'Card 2',
-      weight: 1,
     },
   ],
 };
@@ -42,7 +39,6 @@ describe('AppContext', () => {
         id: 'card-new',
         columnId: 'column-initial-1',
         title: 'Card',
-        weight: 0,
       };
 
       const response = api.addCard(initialState, card);
@@ -79,13 +75,11 @@ describe('AppContext', () => {
     describe('updateCard', () => {
       const NEW_CARD_TITLE = 'NEW_CARD_TITLE';
       const NEW_CARD_DESCRIPTION = 'NEW_CARD_DESCRIPTION';
-      const NEW_CARD_WEIGHT = 100;
 
       it('updates the specified card', () => {
         const response = api.updateCard(initialState, 'card-initial-1', {
           title: NEW_CARD_TITLE,
           description: NEW_CARD_DESCRIPTION,
-          weight: NEW_CARD_WEIGHT,
         });
 
         const nextState = cloneDeep(initialState);
@@ -93,7 +87,6 @@ describe('AppContext', () => {
         const card = nextState.cards.find(card => card.id === 'card-initial-1') as Card;
         card.title = NEW_CARD_TITLE;
         card.description = NEW_CARD_DESCRIPTION;
-        card.weight = NEW_CARD_WEIGHT;
 
         expect(response).toStrictEqual(nextState);
       });
@@ -115,7 +108,6 @@ describe('AppContext', () => {
       const column: Column = {
         id: 'column-new',
         title: 'Column',
-        weight: 0,
       };
 
       const response = api.addColumn(initialState, column);
@@ -159,19 +151,16 @@ describe('AppContext', () => {
 
     describe('updateColumn', () => {
       const NEW_COLUMN_TITLE = 'NEW_COLUMN_TITLE';
-      const NEW_COLUMN_WEIGHT = 100;
 
       it('updates the specified column', () => {
         const response = api.updateColumn(initialState, 'column-initial-1', {
           title: NEW_COLUMN_TITLE,
-          weight: NEW_COLUMN_WEIGHT,
         });
 
         const nextState = cloneDeep(initialState);
 
         const column = nextState.columns.find(column => column.id === 'column-initial-1') as Column;
         column.title = NEW_COLUMN_TITLE;
-        column.weight = NEW_COLUMN_WEIGHT;
 
         expect(response).toMatchObject(nextState);
       });

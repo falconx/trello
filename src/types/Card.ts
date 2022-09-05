@@ -3,7 +3,6 @@ export interface Card {
   columnId: string;
   title: string;
   description?: string;
-  weight: number;
 }
 
 export type EditableCardFields = Partial<Omit<Card, 'id'>>;

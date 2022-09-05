@@ -34,7 +34,6 @@ const Board: React.FunctionComponent = () => {
     ctx.addColumn({
       id: uuidv4(),
       title: newColumnTitle,
-      weight: 0,
     });
 
     // reset add new column fields
