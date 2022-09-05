@@ -73,7 +73,8 @@ const Board: React.FunctionComponent = () => {
               <label>
                 <VisuallyHidden as="span">Add new card title</VisuallyHidden>
 
-                <textarea
+                <input
+                  type="text"
                   className={styles.newColumnTitle}
                   value={newColumnTitle}
                   onChange={event => setNewColumnTitle(event.target.value)}

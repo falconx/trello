@@ -5,6 +5,7 @@ import { AppContext } from '../../AppContext';
 import { Props as CardProps } from '../Card';
 import VisuallyHidden from '../VisuallyHidden';
 import Button, { Variant as ButtonVariant } from '../Button';
+import EditableTitleField from '../EditableTitleField';
 
 import { Column as IColumn } from '../../types/Column';
 
@@ -94,11 +95,9 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
         <VisuallyHidden as="h2">{title}</VisuallyHidden>
 
         <div className={styles.stack}>
-          <label>
-            <VisuallyHidden as="span">Column title</VisuallyHidden>
-
-            <input
-              type="text"
+          <div className={styles.title}>
+            <EditableTitleField
+              label="Column title"
               value={title}
               onChange={(event) => {
                 if (!event.target.value) {
@@ -109,9 +108,8 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
                   title: event.target.value,
                 })
               }}
-              className={styles.title}
             />
-          </label>
+          </div>
 
           {(hasCards || isHighlighted) && (
             <ul className={styles.stack}>

@@ -11,15 +11,18 @@
 }
 
 .title {
-  border: none;
-  background: none;
-
   /* left aligns column title with card text */
   padding-left: var(--space-3);
 }
 
 .newCardTitle {
   width: 100%;
+  padding: var(--space-1);
+  border: none;
+  border-radius: 3px;
+  box-shadow: var(--shadow);
+  font-size: var(--text-small);
+  resize: none;
 }
 
 .root.highlight {

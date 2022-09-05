@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
 import Modal from '../Modal';
 import Button, { Variant as ButtonVariant } from '../Button';
+import EditableTitleField from '../EditableTitleField';
 
 import { Card } from '../../types/Card';
 
@@ -50,15 +52,13 @@ const EditModal: React.FunctionComponent<Props> = ({
 
       <div className={styles.stack}>
         <div className={styles.header}>
-          <label>
-            <input
-              type="text"
+          <div className={styles.newTitle}>
+            <EditableTitleField
+              label="Title"
               value={newTitle}
               onChange={event => setNewTitle(event.target.value)}
-              className={styles.title}
-              required
             />
-          </label>
+          </div>
 
           <Button
             variant={ButtonVariant.Secondary}

@@ -8,13 +8,9 @@
   margin-top: var(--space-7);
 }
 
-.title {
-  border: none;
-  background: none;
-}
-
-.title:invalid {
-  border: 2px solid var(--c-red);
+.newTitle {
+  flex-grow: 1;
+  margin-right: var(--space-3);
 }
 
 .label {
@@ -28,7 +24,7 @@
   padding: var(--space-3);
   border: none;
   border-radius: 3px;
-  box-shadow: 0 1px 2px -1px #091e4240, 0 0 0 1px #091e4214;
+  box-shadow: var(--shadow);
   resize: none;
 }
 

@@ -17,7 +17,7 @@
 
 .description {
   margin-top: var(--space-3);
-  color: var(--c-dark-grey);
+  color: var(--c-light-grey);
   font-size: var(--text-small);
 
   /* clamp up to 3 lines */
