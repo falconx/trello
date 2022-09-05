@@ -44,4 +44,4 @@ Pushing to the `develop` branch will trigger a deploy to https://trello-nine.ver
 
   Not a big deal now but could bloat our local storage when adding more features which require temporary global state.
 
-  We could have a seperate typedef for stored global state and have `activeDragCard` use `useState` instead of `useLocalStorage`.
+  We could have a separate typedef for stored global state and have `activeDragCard` use `useState` instead of `useLocalStorage`.
