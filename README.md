@@ -1,46 +1,42 @@
-# Getting Started with Create React App
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Quick start
 
-In the project directory, you can run:
+```bash
+yarn # Install dependencies
+yarn start # Run the app in dev mode
+```
 
-### `npm start`
+# Deployments
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Pushing to the `develop` branch will trigger a deploy to https://trello-nine.vercel.app
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+# What else you would've added to the project if this was going to be released as a real app?
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Add an image field for each card to allows users to specify an image to show in the edit modal and card preview
+* Add routing support for cards so that each edit modal view is mounted at `/:card-id`
+  * Update document title with the card title to improve SEO
+* Form validation with error messages
+* Enhance reordering
+  * Allow for cards to be reordered within a column
+  * Allow for columns to be reordered
+  * In a real app I would make use of a well-established library for managing the drag and drop behaviour
+* User accounts and authentication
+  * Assign users to cards
+* Checklists
+* Search
+* Images
+* Deadline dates
 
-### `npm run build`
+## Accessibility improvements
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* It's currently not possible to reorder cards using only a keyboard — To solve this we could have a dropdown field within the edit modal view which lists all the available column titles and, on selection, reassigns the card `columnId`
+* There are lots of a11y considerations for modals, the easiest way to meet these standards is by using [react-modal](https://github.com/reactjs/react-modal)
+* It is currently not possible to hide the add card and add list fields using only a keyboard
+* Hover/focus styles
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Issues
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+* Prevent body scrolling on when modal is present — Mostly an issue on mobile
