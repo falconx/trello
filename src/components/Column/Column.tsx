@@ -61,7 +61,6 @@ const Column: React.FunctionComponent<Props> = ({ id, title, children }) => {
       <div
         ref={rootEl}
         className={rootClasses.join(' ')}
-        draggable
         onDragEnter={() => {
           const activeCard = ctx.state.cards.find(card => card.id === ctx.state.activeDragCardId);
 
