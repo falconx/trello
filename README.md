@@ -39,4 +39,9 @@ Pushing to the `develop` branch will trigger a deploy to https://trello-nine.ver
 
 ## Issues
 
-* Prevent body scrolling on when modal is present — Mostly an issue on mobile
+1. Prevent body scrolling on when modal is present — Mostly an issue on mobile
+1. `activeDragCardId` state will unnecessarily be stored in localStorage (See `AppContext.tsx`)
+
+  Not a big deal now but could bloat our local storage when adding more features which require temporary global state.
+
+  We could have a seperate typedef for stored global state and have `activeDragCard` use `useState` instead of `useLocalStorage`.
