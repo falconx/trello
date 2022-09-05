@@ -20,8 +20,38 @@ export interface GlobalAppContext {
 }
 
 const defaultState: GlobalState = {
-  columns: [],
-  cards: [],
+  columns: [
+    {
+      id: 'todo',
+      title: 'To Do',
+    },
+    {
+      id: 'in-progress',
+      title: 'In Progress',
+    },
+    {
+      id: 'done',
+      title: 'Done',
+    },
+  ],
+  cards: [
+    {
+      id: 'card-0',
+      columnId: 'done',
+      title: 'Make breakfast',
+      description: `In order to make breakfast you'll need the following ingredients:\n\n* Eggs\n* Sausages\n* Beans\n* Hash browns\n* Toast`,
+    },
+    {
+      id: 'card-1',
+      columnId: 'todo',
+      title: 'Check mail',
+    },
+    {
+      id: 'card-2',
+      columnId: 'todo',
+      title: 'Get to work',
+    },
+  ],
 };
 
 const noop = () => {};
