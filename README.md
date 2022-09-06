@@ -22,6 +22,7 @@ Pushing to the `develop` branch will trigger a deploy to https://trello-nine.ver
 * Enhance reordering
   * Allow for cards to be reordered within a column
   * Allow for columns to be reordered
+  * Add touch support
   * In a real app I would make use of a well-established library for managing the drag and drop behaviour
 * User accounts and authentication
   * Assign users to cards
