@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.input {
+  width: 100%;
+  border: none;
+  background: none;
+  text-overflow: ellipsis;
+  border: none;
+  background: none;
+}
+
+.icon {
+  height: 1em;
+  color: var(--c-light-grey);
+}

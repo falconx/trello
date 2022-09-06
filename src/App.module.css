@@ -1,0 +1,44 @@
+:root {
+  --shadow: 0 1px 2px -1px #091e4240, 0 0 0 1px #091e4214;
+
+  /* spacing scale */
+  --space-1: 0.375rem;
+  --space-2: 0.5rem;
+  --space-3: 0.625rem;
+  --space-4: 0.75rem;
+  --space-5: 0.875rem;
+  --space-6: 1rem;
+  --space-7: 1.125rem;
+
+  /* type scale */
+  --text-small: 0.875rem;
+
+  /* generic colors */
+  --c-white: #fff;
+  --c-black: #222;
+  --c-grey: #ebecf0;
+  --c-light-grey: #5e6c84;
+  --c-blue: #0079bf;
+  --c-light-blue: #e2f4ff;
+  --c-red: #d1576e;
+  --c-light-red: #ffecec;
+
+  /* component colors */
+  --c-overlay: #000000a3;
+  --c-card: var(--c-white);
+  --c-column: var(--c-grey);
+  --c-column-drag-highlight: var(--c-light-blue);
+
+  --c-button-primary: var(--c-blue);
+  --c-button-primary-text: var(--c-white);
+  --c-button-secondary: var(--c-light-blue);
+  --c-button-secondary-text: var(--c-blue);
+  --c-button-remove: var(--c-light-red);
+  --c-button-remove-text: var(--c-red);
+  --c-button-disabled: var(--c-grey);
+  --c-button-disabled-text: var(--c-black);
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}

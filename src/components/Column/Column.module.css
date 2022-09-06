@@ -1,0 +1,42 @@
+.root {
+  width: 270px;
+  padding: var(--space-3);
+  margin-bottom: var(--space-2);
+  border-radius: 3px;
+  background-color: var(--c-column);
+}
+
+.stack > * + * {
+  margin-top: var(--space-3);
+}
+
+.title {
+  /* left aligns column title with card text */
+  padding-left: var(--space-3);
+}
+
+.newCardTitle {
+  width: 100%;
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+  border: none;
+  border-radius: 3px;
+  box-shadow: var(--shadow);
+  font-size: var(--text-small);
+}
+
+.root.highlight {
+  background-color: var(--c-column-drag-highlight);
+}
+
+/* https://stackoverflow.com/a/18582960 */
+.root.highlight * {
+  pointer-events: none;
+}
+
+
+.dropzone {
+  height: 50px;
+  border: 2px dashed;
+  border-radius: 3px;
+}

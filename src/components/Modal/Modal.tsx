@@ -1,0 +1,49 @@
+import { useEffect } from 'react';
+import ReactDOM from 'react-dom';
+
+import styles from './Modal.module.css';
+
+interface PortalProps {
+  children?: React.ReactNode;
+}
+
+const el = document.createElement('div');
+
+const Portal: React.FunctionComponent<PortalProps> = ({ children }) => {
+  const modalRoot = document.getElementById('modal-root') as HTMLElement;
+
+  useEffect(() => {
+    modalRoot.appendChild(el);
+
+    return () => {
+      modalRoot.removeChild(el);
+    };
+  }, [modalRoot]);
+
+  return ReactDOM.createPortal(children, el);
+};
+
+interface ModalProps {
+  onClose: () => void;
+  children?: React.ReactNode;
+}
+
+const Modal: React.FunctionComponent<ModalProps> = ({ onClose, children }) => (
+  <Portal>
+    <div
+      className={styles.overlay}
+      onClick={onClose}
+    >
+      <div
+        className={styles.content}
+        onClick={event => {
+          event.stopPropagation();
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  </Portal>
+);
+
+export default Modal;

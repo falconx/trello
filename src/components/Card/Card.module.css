@@ -1,0 +1,29 @@
+.root {
+  padding: var(--space-3);
+  border-radius: 3px;
+  background-color: var(--c-card);
+  cursor: pointer;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  margin-right: var(--space-3);
+}
+
+.description {
+  margin-top: var(--space-3);
+  color: var(--c-light-grey);
+  font-size: var(--text-small);
+
+  /* clamp up to 3 lines */
+  /* https://css-tricks.com/almanac/properties/l/line-clamp */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -1,0 +1,8 @@
+.root {
+  width: 100%;
+  padding: var(--space-3);
+  border: none;
+  border-radius: 3px;
+  box-shadow: var(--shadow);
+  font-size: var(--text-small);
+}

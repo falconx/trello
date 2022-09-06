@@ -1,0 +1,45 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stack > * + * {
+  margin-top: var(--space-7);
+}
+
+.newTitle {
+  flex-grow: 1;
+  margin-right: var(--space-3);
+}
+
+.label {
+  width: 100%;
+}
+
+.description {
+  height: 200px;
+  width: 100%;
+  margin-top: var(--space-1);
+  padding: var(--space-3);
+  border: none;
+  border-radius: 3px;
+  box-shadow: var(--shadow);
+  resize: none;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.left {
+  flex: 1 1 auto;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
